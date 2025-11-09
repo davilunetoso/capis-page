@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ola linetosa ¿kieres ver un capybara sonsote aca comiendo bien rico?</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #fcfcfc;
+      font-family: "Poppins", Arial, sans-serif;
+      overflow: hidden;
+    }
+
+    .contenedor {
+      margin: auto;
+      width: 900px;
+      margin-top: 300px;
+      text-align: center;
+    }
+
+    .titulo {
+      margin-bottom: 20px;
+    }
+
+    .opciones p {
+      background: black;
+      display: inline-block;
+      padding: 12px 20px;
+      color: #ffffff;
+      border-radius: 5px;
+      font-weight: bold;
+      transition: 0.3s;
+      position: absolute;
+    }
+
+    .opciones p:hover {
+      background: gray;
+      cursor: pointer;
+    }
+
+    p.p1 {
+      top: 400px;
+      left: 500px;
+      width: 100px;
+    }
+
+    p.p2 {
+      top: 400px;
+      left: 750px;
+      width: 100px;
+    }
+
+    #si {
+      background: #515050;
+      left: 420px;
+      position: absolute;
+      top: 200px;
+      width: 550px;
+      color: #ffffff;
+      padding: 50px;
+      border-radius: 10px;
+      display: none;
+      font-size: 20px;
+    }
+
+    /* Estilo del modal */
+    #videoModal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      backdrop-filter: blur(8px);
+      background: rgba(0, 0, 0, 0.3);
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    #videoModal .contenido {
+      background: linear-gradient(135deg, #ffffff, #f5f5f5);
+      border-radius: 25px;
+      padding: 25px;
+      text-align: center;
+      width: 80%;
+      max-width: 600px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      transform: scale(1);
+      animation: popUp 0.5s ease-in-out;
+    }
+
+    @keyframes popUp {
+      0% { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    #videoModal h2 {
+      color: #333;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+
+    #videoModal video {
+      width: 100%;
+      border-radius: 15px;
+      margin-top: 10px;
+      border: 3px solid #ddd;
+    }
+
+    #cerrar {
+      background: #ff4b4b;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 18px;
+      margin-top: 15px;
+      cursor: pointer;
+      transition: 0.3s;
+      font-size: 15px;
+    }
+
+    #cerrar:hover {
+      background: #d63838;
+    }
+  </style>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+  <script>
+    $(document).ready(function(){
+      // Botón "sí" se mueve en la primera pantalla
+      $('.p1').hover(function(){
+        let arriba = Math.random() * (400 - 50) + 50;
+        let izquierda = Math.random() * (800 - 50) + 50;
+        $(this).css('top', arriba + 'px');
+        $(this).css('left', izquierda + 'px');
+      });
+
+      // Después de 15 segundos, cambia el contenido
+      setTimeout(function(){
+        $(".contenedor").fadeOut(500, function(){
+          $("body").html(`
+            <div class="contenedor">
+              <div class="titulo">
+                <h1>¿Segura no quieres ver al capybara sonsote comiendo bien acá??????''''??'</h1>
+              </div>
+              <div class="opciones">
+                <p class="p1b" style="top:400px; left:500px;">sí</p>
+                <p class="p2b" style="top:400px; left:750px;">no</p>
+              </div>
+            </div>
+
+            <div id="videoModal">
+              <div class="contenido">
+                <h2>Sabía que sí querías ver al capybara jejjeeje</h2>
+                <video id="capyVideo" controls>
+                  <source src="capis.mp4" type="video/mp4">
+                  Tu navegador no soporta el video.
+                </video>
+                <button id="cerrar">Cerrar</button>
+              </div>
+            </div>
+          `);
+
+          // “no” se escapa
+          $('.p2b').hover(function(){
+            let arriba = Math.random() * (400 - 50) + 50;
+            let izquierda = Math.random() * (800 - 50) + 50;
+            $(this).css({
+              'top': arriba + 'px',
+              'left': izquierda + 'px'
+            });
+          });
+
+          // ✅ Solo muestra el video al dar clic en “sí”
+          $('.p1b').on('click', function(){
+            $('#videoModal').css('display', 'flex');
+            const video = document.getElementById('capyVideo');
+            video.currentTime = 0; // empieza desde el inicio
+            video.play(); // suena y se reproduce solo aquí
+          });
+
+          // Botón para cerrar modal
+          $(document).on('click', '#cerrar', function(){
+            const video = document.getElementById('capyVideo');
+            video.pause(); // pausa el video al cerrar
+            $('#videoModal').hide();
+          });
+        });
+      }, 15000);
+    });
+
+    // Muestra mensaje al dar clic en "no" (pantalla inicial)
+    function dijoNO(){
+      const mensaje = document.getElementById('si');
+      mensaje.style.display = 'block';
+      setTimeout(() => {
+        mensaje.style.display = 'none';
+      }, 5000);
+    }
+  </script>
+</head>
+
+<body>
+  <div class="contenedor">
+    <div class="titulo">
+      <h1>ola linetosa ¿kieres ver un capybara sonsote aca comiendo bien rico?</h1>
+    </div>
+
+    <div class="opciones">
+      <p class="p1">si</p>
+      <p onclick="dijoNO()" class="p2">no</p>
+    </div>
+
+    <div id="si">
+      <h2>¿por qué no quisiste ver al capybara sonsote comiendo bien rico? 😥</h2>
+    </div>
+  </div>
+</body>
+</html>
